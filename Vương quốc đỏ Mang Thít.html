@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vương quốc đỏ Mang Thít</title>
+<style>
+/* CHÚ THÍCH 1: CSS dùng để thiết kế giao diện, màu sắc và bố cục game. */
+:root{--clay:#a8472b;--orange:#d77b45;--cream:#fff4df;--ink:#432b22;--green:#49684a}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial, sans-serif;background:linear-gradient(135deg,#f8e5c7,#f3c6a0);color:var(--ink)}
+.wrap{max-width:900px;margin:0 auto;padding:22px}
+header{text-align:center;padding:22px 15px;background:var(--clay);color:white;border-radius:22px;box-shadow:0 7px 0 #77321f}
+h1{margin:0 0 8px;font-size:clamp(27px,5vw,42px)}
+.subtitle{margin:0;line-height:1.5}
+.panel{background:var(--cream);border:3px solid #e6a36d;border-radius:20px;padding:22px;margin-top:20px;box-shadow:0 5px 0 #d7a77d}
+.stats{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;margin-bottom:15px}
+.pill{background:#f1d3ad;padding:9px 13px;border-radius:999px;font-weight:bold}
+.progress{height:12px;background:#ead1b7;border-radius:20px;overflow:hidden;margin:12px 0 20px}
+#bar{height:100%;width:0;background:var(--green);transition:width .3s}
+.scene{font-size:54px;text-align:center;margin:5px 0}
+h2{margin-top:5px;color:var(--clay)}
+#question{font-size:19px;font-weight:bold;line-height:1.5}
+.answers{display:grid;gap:10px;margin-top:18px}
+button{font-size:16px;font-weight:bold;border:0;border-radius:12px;padding:13px 16px;cursor:pointer;transition:transform .12s,filter .12s}
+button:hover{filter:brightness(.96);transform:translateY(-1px)}
+.answer{background:white;border:2px solid #e3b48c;text-align:left;color:var(--ink)}
+.answer:disabled{cursor:default;opacity:.82}
+.primary{background:var(--green);color:white}
+.secondary{background:#ead1b7;color:var(--ink)}
+#feedback{min-height:48px;line-height:1.5;font-weight:bold;margin-top:14px}
+.note{font-size:14px;line-height:1.6;color:#654b3c}
+.hidden{display:none}
+footer{text-align:center;padding:18px;font-size:13px}
+@media(max-width:520px){.wrap{padding:12px}.panel{padding:16px}.stats{justify-content:center}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🏺 VƯƠNG QUỐC ĐỎ MANG THÍT</h1>
+    <p class="subtitle">Một chuyến phiêu lưu nhỏ khám phá nghề gốm và câu chuyện làng nghề.</p>
+  </header>
+
+  <section class="panel" id="intro">
+    <div class="scene">🧱 🔥 🏺</div>
+    <h2>Trước khi bắt đầu: Tìm hiểu về gốm đỏ Vĩnh Long</h2>
+    <p>Người chơi vào vai một bạn trẻ khám phá văn hóa gạch gốm truyền thống. Trước khi vào game, hãy đọc phần kiến thức nền dưới đây để hiểu chủ đề và có thể trả lời 10 câu hỏi.</p>
+    <h3>1. Gốm đỏ Vĩnh Long là gì?</h3>
+    <p>Gốm đỏ là dòng sản phẩm làm từ đất sét, được tạo hình rồi nung trong lò. Màu sắc đỏ cam đặc trưng gắn với nguồn đất sét và kỹ thuật nung của vùng đất Vĩnh Long.</p>
+    <h3>2. Làng nghề và lịch sử</h3>
+    <p>Khu vực Mang Thít được biết đến với nghề làm gạch, gốm và những lò gạch truyền thống. Nghề này gắn với đời sống người dân địa phương, kinh nghiệm của nghệ nhân và hoạt động sản xuất qua nhiều thế hệ.</p>
+    <h3>3. Quy trình làm gạch, gốm</h3>
+    <p>Các công đoạn cơ bản có thể gồm: chuẩn bị đất sét, nhào đất, tạo hình, phơi hoặc làm khô, đưa vào lò nung, làm nguội và kiểm tra thành phẩm. Quy trình cụ thể có thể khác nhau tùy loại sản phẩm và cơ sở sản xuất.</p>
+    <h3>4. Vì sao cần gìn giữ làng nghề?</h3>
+    <p>Làng nghề lưu giữ tri thức thủ công, ký ức cộng đồng và bản sắc địa phương. Tuy nhiên, nghề truyền thống có thể gặp khó khăn do thay đổi nhu cầu thị trường, chi phí sản xuất, môi trường và việc người trẻ ít có cơ hội trải nghiệm.</p>
+    <h3>5. Người trẻ có thể làm gì?</h3>
+    <p>Tìm hiểu từ nghệ nhân và tư liệu địa phương; tham quan có trách nhiệm; làm video, ảnh, bản đồ số hoặc trò chơi có thông tin kiểm chứng; đồng thời giới thiệu sản phẩm và câu chuyện làng nghề một cách tôn trọng.</p>
+    <p><b>Cách chơi:</b> Có 10 câu hỏi, mỗi câu đúng được 10 điểm (tối đa 100 điểm). Chọn một đáp án cho mỗi câu. Sau mỗi câu, game sẽ giải thích đáp án; dù đúng hay sai, bạn vẫn nhận được một mảnh ký ức làng nghề.</p>
+    <button class="primary" id="startBtn">Bắt đầu hành trình ▶</button>
+  </section>
+
+  <section class="panel hidden" id="game">
+    <div class="stats">
+      <span class="pill" id="round">Thử thách 1/10</span>
+      <span class="pill" id="score">Điểm: 0</span>
+      <span class="pill" id="relics">🏺 Ký ức: 0/10</span>
+    </div>
+    <div class="progress"><div id="bar"></div></div>
+    <div class="scene" id="emoji">🌱</div>
+    <h2 id="stage">Thử thách 1: Khởi nguồn</h2>
+    <p id="question"></p>
+    <div class="answers" id="answers"></div>
+    <div id="feedback" aria-live="polite"></div>
+    <button class="primary hidden" id="next">Tiếp tục →</button>
+  </section>
+
+  <section class="panel hidden" id="result">
+    <div class="scene" id="endingEmoji">🎉</div>
+    <h2 id="endingTitle">Hoàn thành hành trình!</h2>
+    <p id="endingText"></p>
+    <p id="badge"></p>
+    <button class="primary" id="restartBtn">Chơi lại ↻</button>
+  </section>
+
+  <footer>Thiết kế mẫu phục vụ bài tập Tư duy thiết kế • Chủ đề văn hóa gạch gốm Vĩnh Long</footer>
+</div>
+
+<script>
+/* CHÚ THÍCH 2: Mảng questions lưu dữ liệu từng câu hỏi, đáp án và lời giải.
+   correct là vị trí đáp án đúng, tính từ 0. */
+const questions = [
+ {emoji:"🌱",stage:"Thử thách 1: Nguyên liệu",q:"Nguyên liệu chính thường dùng để làm gạch và nhiều sản phẩm gốm truyền thống là gì?",a:["Đất sét","Vải cotton","Giấy bìa","Thủy tinh vụn"],correct:0,why:"Đất sét có tính dẻo khi được chuẩn bị phù hợp nên có thể tạo hình trước khi làm khô và nung."},
+ {emoji:"👐",stage:"Thử thách 2: Tạo hình",q:"Vì sao người thợ cần tạo hình đất trước khi nung?",a:["Để sản phẩm có hình dáng mong muốn","Để thay thế hoàn toàn công đoạn nung","Để biến đất thành kim loại","Chỉ để trang trí bao bì"],correct:0,why:"Tạo hình định dạng sản phẩm như viên gạch, chiếc bình hoặc vật dụng trước các công đoạn tiếp theo."},
+ {emoji:"☀️",stage:"Thử thách 3: Làm khô",q:"Việc phơi hoặc làm khô sản phẩm trước khi nung thường nhằm mục đích gì?",a:["Giảm bớt độ ẩm","Làm sản phẩm tan thành bùn","Tăng kích thước vô hạn","Thay thế nguyên liệu đất sét"],correct:0,why:"Làm khô giúp giảm độ ẩm trước khi nung, góp phần hạn chế lỗi do nước còn nhiều trong sản phẩm."},
+ {emoji:"🔥",stage:"Thử thách 4: Lò nung",q:"Vai trò chính của công đoạn nung gạch, gốm là gì?",a:["Làm sản phẩm rắn chắc hơn nhờ biến đổi khi gặp nhiệt","Làm đất trở lại thành bùn","Dán nhãn lên sản phẩm","Làm nguội sản phẩm ngay lập tức"],correct:0,why:"Nung ở nhiệt độ phù hợp tạo ra những biến đổi giúp sản phẩm đạt độ cứng và tính chất cần thiết."},
+ {emoji:"🧱",stage:"Thử thách 5: Gốm đỏ",q:"Tên gọi 'gốm đỏ' thường gợi nhắc đặc điểm nào của dòng sản phẩm?",a:["Sắc đỏ hoặc đỏ cam đặc trưng","Màu xanh phát sáng","Bề mặt luôn làm bằng vải","Sản phẩm không cần nung"],correct:0,why:"Sắc đỏ/đỏ cam là đặc điểm dễ nhận biết của nhiều sản phẩm gốm đỏ ở Vĩnh Long."},
+ {emoji:"🏘️",stage:"Thử thách 6: Làng nghề",q:"Khu vực nào của Vĩnh Long được biết đến với cảnh quan lò gạch và nghề gạch, gốm truyền thống?",a:["Mang Thít","Sa Pa","Đà Lạt","Hạ Long"],correct:0,why:"Mang Thít nổi tiếng với vùng sản xuất gạch, gốm và những lò gạch truyền thống."},
+ {emoji:"🧑‍🎨",stage:"Thử thách 7: Nghệ nhân",q:"Nguồn nào nên được kết hợp khi tìm hiểu câu chuyện lịch sử làng nghề?",a:["Tư liệu địa phương và lời kể của nghệ nhân","Tin đồn không rõ nguồn","Bình luận ngẫu nhiên duy nhất","Thông tin không có ngày tháng hoặc xuất xứ"],correct:0,why:"Đối chiếu tư liệu địa phương với lời kể của nghệ nhân giúp câu chuyện đầy đủ và đáng tin cậy hơn."},
+ {emoji:"🌿",stage:"Thử thách 8: Thách thức",q:"Điều nào có thể là thách thức đối với một làng nghề truyền thống?",a:["Chi phí sản xuất và nhu cầu thị trường thay đổi","Có thêm người học nghề","Có tư liệu được lưu giữ","Có khách tham quan tìm hiểu"],correct:0,why:"Chi phí, thị trường và việc thiếu người kế tục có thể gây áp lực cho hoạt động làng nghề."},
+ {emoji:"📱",stage:"Thử thách 9: Kết nối giới trẻ",q:"Cách nào phù hợp để giúp giới trẻ tìm hiểu gốm đỏ Vĩnh Long?",a:["Làm video hoặc trò chơi có thông tin kiểm chứng","Chia sẻ thông tin chưa xác minh","Chỉ dùng lời đồn","Không giới thiệu câu chuyện làng nghề"],correct:0,why:"Nội dung số sáng tạo có thể giúp di sản gần gũi hơn nếu thông tin được kiểm chứng."},
+ {emoji:"🤝",stage:"Thử thách 10: Gìn giữ tương lai",q:"Khi tham quan làng nghề, hành động nào thể hiện sự tôn trọng di sản?",a:["Hỏi ý kiến trước khi ghi hình và tuân thủ hướng dẫn","Tự ý lấy sản phẩm làm kỷ niệm","Xả rác tại khu vực lò gạch","Đăng thông tin sai để thu hút lượt xem"],correct:0,why:"Tham quan có trách nhiệm, tôn trọng nghệ nhân và chia sẻ thông tin chính xác góp phần gìn giữ giá trị làng nghề."}
+];
+
+/* CHÚ THÍCH 3: Các biến lưu trạng thái game hiện tại. */
+let current = 0;
+let score = 0;
+let answered = false;
+let collected = 0;
+
+/* CHÚ THÍCH 4: Bắt đầu game và hiển thị câu hỏi đầu tiên. */
+function startGame(){
+  document.getElementById("intro").classList.add("hidden");
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("game").classList.remove("hidden");
+  current = 0; score = 0; collected = 0;
+  renderQuestion();
+}
+
+/* CHÚ THÍCH 5: Cập nhật nội dung câu hỏi và tạo nút đáp án. */
+function renderQuestion(){
+  answered = false;
+  const item = questions[current];
+  document.getElementById("round").textContent = `Thử thách ${current+1}/${questions.length}`;
+  document.getElementById("score").textContent = `Điểm: ${score}`;
+  document.getElementById("relics").textContent = `🏺 Ký ức: ${collected}/${questions.length}`;
+  document.getElementById("bar").style.width = `${(current/questions.length)*100}%`;
+  document.getElementById("emoji").textContent = item.emoji;
+  document.getElementById("stage").textContent = item.stage;
+  document.getElementById("question").textContent = item.q;
+  document.getElementById("feedback").textContent = "";
+  document.getElementById("next").classList.add("hidden");
+  const holder = document.getElementById("answers");
+  holder.innerHTML = "";
+  item.a.forEach((answer,index)=>{
+    const btn = document.createElement("button");
+    btn.className = "answer";
+    btn.textContent = `${String.fromCharCode(65+index)}. ${answer}`;
+    btn.onclick = ()=>checkAnswer(index);
+    holder.appendChild(btn);
+  });
+}
+
+/* CHÚ THÍCH 6: Kiểm tra lựa chọn, cộng điểm và hiển thị giải thích. */
+function checkAnswer(choice){
+  if(answered) return;
+  answered = true;
+  const item = questions[current];
+  const buttons = document.querySelectorAll(".answer");
+  buttons.forEach((btn,index)=>{
+    btn.disabled = true;
+    if(index === item.correct) btn.style.borderColor = "#49684a";
+  });
+  collected++;
+  if(choice === item.correct){
+    score += 10;
+    document.getElementById("feedback").textContent = "✅ Chính xác! +10 điểm. " + item.why;
+  } else {
+    document.getElementById("feedback").textContent = "💡 Chưa đúng. " + item.why;
+  }
+  document.getElementById("score").textContent = `Điểm: ${score}`;
+  document.getElementById("relics").textContent = `🏺 Ký ức: ${collected}/${questions.length}`;
+  document.getElementById("bar").style.width = `${(collected/questions.length)*100}%`;
+  document.getElementById("next").textContent = current === questions.length-1 ? "Xem kết quả ★" : "Tiếp tục →";
+  document.getElementById("next").classList.remove("hidden");
+}
+
+/* CHÚ THÍCH 7: Chuyển câu tiếp theo hoặc kết thúc trò chơi. */
+function nextQuestion(){
+  if(current < questions.length-1){
+    current++;
+    renderQuestion();
+  }else{
+    finishGame();
+  }
+}
+
+/* CHÚ THÍCH 8: Tính kết quả và đưa ra thông điệp kết thúc. */
+function finishGame(){
+  document.getElementById("game").classList.add("hidden");
+  document.getElementById("result").classList.remove("hidden");
+  document.getElementById("bar").style.width = "100%";
+  document.getElementById("endingEmoji").textContent = score >= 40 ? "🏆" : "🏺";
+  document.getElementById("endingTitle").textContent = score >= 40 ? "Đại sứ Gốm Đỏ!" : "Người khám phá làng nghề!";
+  document.getElementById("endingText").textContent = `Bạn đạt ${score}/100 điểm và thu thập ${collected}/10 mảnh ký ức. Hãy tiếp tục tìm hiểu, kể lại câu chuyện và lan tỏa giá trị văn hóa gạch gốm Vĩnh Long.`;
+  document.getElementById("badge").textContent = score >= 40 ? "Danh hiệu: Người truyền lửa văn hóa 🔥" : "Danh hiệu: Mầm xanh di sản 🌱";
+}
+function restartGame(){startGame();}
+
+/* CHÚ THÍCH 9: Gắn sự kiện nút bằng JavaScript thay vì thuộc tính onclick trong HTML. */
+document.getElementById("startBtn").addEventListener("click", startGame);
+document.getElementById("next").addEventListener("click", nextQuestion);
+document.getElementById("restartBtn").addEventListener("click", restartGame);
+</script>
+</body>
+</html>
